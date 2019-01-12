@@ -1,24 +1,32 @@
-# We must import all the views here because Flask 
-# has no other way to load the modules
+from flask import Blueprint, request, jsonify, current_app as app
 
-from flask import Blueprint, request, jsonify
+# TODO: I want to strongly discourage
+# direct use of db in views. This will go
+# as soon as DAL appears.
+from service.db.models.greetings import User
+
 
 bp = Blueprint(__name__, __name__)
 
-@bp.route("/", methods=('get',))
-def get():
-    if user.auth:
-        return jsonify(
-            {'message': f'Hello { user.name }!'}
-        )
-    else:
-        return jsonify(
-            {'message': 'Hello there!'}
-        )
+
+@bp.route("/<user_id>", methods=('get',))
+def get(user_id):
+    user = User.get_user(app.db_session, user_id)
+    greeting = getattr(user, 'greeting', 'Hello World!')
+    return jsonify(
+        {'message': greeting}
+    )
 
 
 @bp.route("/", methods=('post',))
 def post():
     data = request.get_json()
-    if 'greeting' in data:
-        user.greeting = data['greeting']
+    user = User(**data)
+    app.db_session.add(user)
+    app.db_session.commit()
+    return jsonify(
+        {
+            'name': 'John',
+            'hello': 'Hola'
+        }
+    )

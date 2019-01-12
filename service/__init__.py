@@ -1,10 +1,2 @@
-from flask import Flask
-
-import api
-import db
-
-
-def create_app(config=None, db=None):
-
-    app = Flask(__name__)
-    
+from service import api
+from service import db

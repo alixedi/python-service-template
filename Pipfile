@@ -11,6 +11,8 @@ alembic = "*"
 flask = "*"
 sqlalchemy = "*"
 gunicorn = "*"
+psycopg2-binary = "*"
+dataclass = "*"
 
 [requires]
 python_version = "3.7"

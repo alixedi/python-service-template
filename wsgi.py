@@ -1,4 +1,4 @@
-from service import create_app
-from service.db import create_db
+from service.api import create_app
+
 
 application = create_app()
