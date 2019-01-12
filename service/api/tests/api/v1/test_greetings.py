@@ -8,7 +8,7 @@ def test_get(client):
     )
     assert response.status_code == 200
 
-    response.get_json()
+    data = response.get_json()
     assert data == {'message': 'Hello World!'}
 
 
